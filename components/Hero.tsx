@@ -44,7 +44,7 @@ const Hero = () => {
           </p>
           
           <div className="flex justify-center mt-8">
-            <Link href="/arena">
+            <Link href="/generate">
               <Button
                 variant="outline"
                 className="rounded-full px-10 py-4 text-lg font-semibold border-2 border-purple-400/30 bg-gradient-to-r from-purple-900/20 to-blue-900/20 backdrop-blur-sm hover:from-purple-800/30 hover:to-blue-800/30 hover:border-purple-400/50 transition-all duration-300 cursor-pointer"
