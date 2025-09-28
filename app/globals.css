@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: 'Crazy';
+  src: url('/fonts/crazy.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -118,5 +126,21 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Crazy', var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   }
 }
+
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}
+
