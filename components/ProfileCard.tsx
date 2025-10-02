@@ -112,7 +112,7 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile, theme, customColors }) => 
           reader.readAsDataURL(blob)
         })
       } catch (error) {
-        console.log('Could not load avatar, using default')
+        console.log('Could not load avatar, using default', error)
       }
     }
 
@@ -253,28 +253,6 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile, theme, customColors }) => 
     `.trim()
     
     return svg
-  }
-
-  const getPlatformGradientStart = (platform: string) => {
-    switch (platform.toLowerCase()) {
-      case 'github': return '#1F2937'
-      case 'reddit': return '#9A3412'
-      case 'instagram': return '#A21CAF'
-      case 'twitter': case 'x': return '#1E40AF'
-      case 'linkedin': return '#1D4ED8'
-      default: return '#1F2937'
-    }
-  }
-
-  const getPlatformGradientEnd = (platform: string) => {
-    switch (platform.toLowerCase()) {
-      case 'github': return '#111827'
-      case 'reddit': return '#7F1D1D'
-      case 'instagram': return '#581C87'
-      case 'twitter': case 'x': return '#1E3A8A'
-      case 'linkedin': return '#1E40AF'
-      default: return '#111827'
-    }
   }
 
   const downloadAsFormat = async (format: string) => {

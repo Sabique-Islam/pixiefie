@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Linkedin } from 'lucide-react'
 import { SiGithub, SiX, SiInstagram, SiReddit } from 'react-icons/si'
 import { Profile } from '@/types/profile'
-import { Theme, ThemeColors, defaultThemes, getPlatformTheme } from '@/lib/themes'
+import { Theme, ThemeColors, defaultThemes } from '@/lib/themes'
 import ProfileCard from './ProfileCard'
 import { ThemeSelector } from './ThemeSelector'
 
