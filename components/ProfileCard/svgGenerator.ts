@@ -47,7 +47,7 @@ export const generateSVG = async ({
         reader.readAsDataURL(blob)
       })
     } catch (error) {
-      console.log('Could not load avatar, using default')
+      console.warn('Could not load avatar, using default', error)
     }
   }
 

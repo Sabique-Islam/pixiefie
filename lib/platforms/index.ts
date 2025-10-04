@@ -1,7 +1,7 @@
 import { fetchGitHubProfile } from './github'
 import { fetchRedditProfile } from './reddit'
 import { fetchInstagramProfile } from './instagram'
-import { fetchTwitterProfile, fetchXProfile } from './twitter'
+import { fetchTwitterProfile } from './twitter'
 import { fetchLinkedInProfile } from './linkedin'
 import { Profile } from '@/types/profile'
 

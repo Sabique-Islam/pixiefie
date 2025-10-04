@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useRef, useState } from 'react'
+import { FC, useRef } from 'react'
 import type { Profile } from '@/types/profile'
 import { Theme, ThemeColors, getPlatformTheme } from '@/lib/themes'
 import { CardDisplay } from './ProfileCard/CardDisplay'
@@ -16,7 +16,6 @@ interface ProfileCardProps {
 
 const ProfileCard: FC<ProfileCardProps> = ({ profile, theme, customColors }) => {
   const cardRef = useRef<HTMLDivElement>(null)
-  const [copied, setCopied] = useState(false)
 
   // Use custom theme or fallback to platform theme
   const activeTheme = theme || getPlatformTheme(profile.platform, customColors)
@@ -59,8 +58,6 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile, theme, customColors }) => 
       cardRef
     })
     copySVGCode(svgContent)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
   }
 
   return (

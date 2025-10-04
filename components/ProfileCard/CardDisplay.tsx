@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import Image from 'next/image'
 import type { Profile } from '@/types/profile'
-import { Theme, ThemeColors, getPlatformTheme } from '@/lib/themes'
+import { Theme, ThemeColors } from '@/lib/themes'
 import { PlatformIcon } from './PlatformIcon'
 
 interface CardDisplayProps {
@@ -13,7 +13,6 @@ interface CardDisplayProps {
 
 export const CardDisplay = forwardRef<HTMLDivElement, CardDisplayProps>(
   ({ profile, activeTheme, customColors }, ref) => {
-    const platformTheme = getPlatformTheme(profile.platform)
     const colors = customColors
       ? { ...activeTheme.colors, ...customColors }
       : activeTheme.colors
