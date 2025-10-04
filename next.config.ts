@@ -22,6 +22,16 @@ const nextConfig: NextConfig = {
         hostname: 'styles.redditmedia.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'pbs.twimg.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'abs.twimg.com',
+        pathname: '/**',
+      },
     ]
   }
 };

@@ -126,7 +126,6 @@ export const getPlatformTheme = (platform: string, customColors?: Partial<ThemeC
     'github': 'from-gray-800 to-gray-900',
     'reddit': 'from-orange-800 to-red-900', 
     'instagram': 'from-pink-800 to-purple-900',
-    'twitter': 'from-blue-800 to-blue-900',
     'x': 'from-blue-800 to-blue-900',
     'linkedin': 'from-blue-700 to-blue-800'
   }
