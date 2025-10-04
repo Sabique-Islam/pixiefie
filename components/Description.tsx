@@ -1,11 +1,18 @@
-import React from 'react'
+import Image from 'next/image';
 
-function Description() {
+export default function Description() {
   return (
-    <div>
-      Description
+    <div className="py-20 px-4">
+      <div className="max-w-4xl mx-auto">
+        <Image
+          src="/Drop/pixiefie.png"
+          alt="Pixiefie Card Example"
+          width={1200}
+          height={800}
+          className="w-full h-auto"
+          priority
+        />
+      </div>
     </div>
-  )
+  );
 }
-
-export default Description
