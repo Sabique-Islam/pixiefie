@@ -2,15 +2,16 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Github, Twitter, Menu as MenuIcon, Coffee} from 'lucide-react'
+import { Github, Menu as MenuIcon } from 'lucide-react'
+import { SiX} from 'react-icons/si'
 import { MenuContainer, MenuItem } from '@/components/ui/fluid-menu'
 
 export default function Navbar() {
 
   const links = [
-    { href: "https://coff.ee/nope.js", icon: <Coffee className="w-5 h-5" />, label: "Buy Me Coffee" },
+    // { href: "https://coff.ee/nope.js", icon: <Coffee className="w-5 h-5" />, label: "Buy Me Coffee" },
     { href: "https://github.com/Sabique-Islam/pixiefie", icon: <Github className="w-5 h-5" />, label: "GitHub" },
-    { href: "https://x.com/nopeJS", icon: <Twitter className="w-5 h-5" />, label: "X" },
+    { href: "https://x.com/nopeJS", icon: <SiX className="w-5 h-5" />, label: "X" },
   ]
 
   return (
