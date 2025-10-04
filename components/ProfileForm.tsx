@@ -47,8 +47,8 @@ export default function ProfileForm() {
       baseUrl: 'https://instagram.com/',
       color: 'hover:bg-pink-900 focus:ring-pink-500'
     },
-    twitter: {
-      name: 'X (Twitter)',
+    x: {
+      name: 'X',
       icon: <SiX className="w-5 h-5" />,
       placeholder: 'Enter X username or URL...',
       baseUrl: 'https://x.com/',
@@ -65,13 +65,14 @@ export default function ProfileForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedPlatform || !url.trim()) return
+    if (!selectedPlatform) return
     
     setLoading(true)
     setError(null)
 
     try {
-      const res = await fetch(`/api/parse?url=${encodeURIComponent(url)}`)
+      // Send both URL and platform to API for validation
+      const res = await fetch(`/api/parse?url=${encodeURIComponent(url)}&platform=${encodeURIComponent(selectedPlatform)}`)
       const data = await res.json()
 
       if (!res.ok) throw new Error(data.error || 'Unknown error')
