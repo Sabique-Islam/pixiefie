@@ -139,11 +139,14 @@ export const ThemeSelector: FC<ThemeSelectorProps> = ({
 
         {showCustomColors && (
           <div className="bg-black/30 rounded-xl p-6 space-y-4 border border-zinc-700">
-            <div className="grid grid-cols-2 gap-4">
-              {/* Primary Color */}
+            <p className="text-sm text-gray-400 mb-4">
+              Customize the gradient colors and card appearance
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Primary Gradient Color */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Primary Color
+                  Primary Gradient Color
                 </label>
                 <div className="flex gap-2">
                   <input
@@ -156,16 +159,17 @@ export const ThemeSelector: FC<ThemeSelectorProps> = ({
                     type="text"
                     value={customColors.primary || selectedTheme.colors.primary}
                     onChange={(e) => handleColorChange('primary', e.target.value)}
-                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm"
+                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm font-mono"
                     placeholder="#4F46E5"
                   />
                 </div>
+                <p className="text-xs text-gray-500 mt-1">Avatar ring & badges</p>
               </div>
 
-              {/* Secondary Color */}
+              {/* Secondary Gradient Color */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Secondary Color
+                  Secondary Gradient Color
                 </label>
                 <div className="flex gap-2">
                   <input
@@ -178,10 +182,11 @@ export const ThemeSelector: FC<ThemeSelectorProps> = ({
                     type="text"
                     value={customColors.secondary || selectedTheme.colors.secondary}
                     onChange={(e) => handleColorChange('secondary', e.target.value)}
-                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm"
+                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm font-mono"
                     placeholder="#7C3AED"
                   />
                 </div>
+                <p className="text-xs text-gray-500 mt-1">Background gradient end</p>
               </div>
 
               {/* Accent Color */}
@@ -200,10 +205,11 @@ export const ThemeSelector: FC<ThemeSelectorProps> = ({
                     type="text"
                     value={customColors.accent || selectedTheme.colors.accent}
                     onChange={(e) => handleColorChange('accent', e.target.value)}
-                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm"
+                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm font-mono"
                     placeholder="#EC4899"
                   />
                 </div>
+                <p className="text-xs text-gray-500 mt-1">Radial patterns & highlights</p>
               </div>
 
               {/* Text Color */}
@@ -222,10 +228,34 @@ export const ThemeSelector: FC<ThemeSelectorProps> = ({
                     type="text"
                     value={customColors.text || selectedTheme.colors.text}
                     onChange={(e) => handleColorChange('text', e.target.value)}
-                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm"
+                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm font-mono"
                     placeholder="#FFFFFF"
                   />
                 </div>
+                <p className="text-xs text-gray-500 mt-1">Main text (name)</p>
+              </div>
+
+              {/* Secondary Text Color */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Secondary Text Color
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="color"
+                    value={customColors.textSecondary || selectedTheme.colors.textSecondary}
+                    onChange={(e) => handleColorChange('textSecondary', e.target.value)}
+                    className="w-12 h-10 rounded border border-zinc-600 bg-black cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={customColors.textSecondary || selectedTheme.colors.textSecondary}
+                    onChange={(e) => handleColorChange('textSecondary', e.target.value)}
+                    className="flex-1 px-3 py-2 bg-black border border-zinc-600 rounded text-white text-sm font-mono"
+                    placeholder="#D1D5DB"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">Username & bio text</p>
               </div>
             </div>
 
