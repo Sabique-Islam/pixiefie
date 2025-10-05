@@ -1,6 +1,5 @@
 import { forwardRef } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
-import Image from 'next/image'
 import type { Profile } from '@/types/profile'
 import { Theme, ThemeColors } from '@/lib/themes'
 import { PlatformIcon } from './PlatformIcon'
@@ -58,11 +57,12 @@ export const CardDisplay = forwardRef<HTMLDivElement, CardDisplayProps>(
               }}
             >
               {profile.avatar ? (
-                <Image
+                <img
                   src={profile.avatar}
                   alt={profile.name || profile.username}
                   width={96}
                   height={96}
+                  crossOrigin="anonymous"
                   className="w-full h-full object-cover"
                 />
               ) : (
