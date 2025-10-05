@@ -1,66 +1,83 @@
-export const downloadAsFormat = async (
-  svgContent: string, 
-  format: 'svg' | 'png' | 'jpg', 
+import { toPng, toJpeg, toSvg } from 'html-to-image'
+
+export const downloadAsPNG = async (
+  element: HTMLElement,
   filename: string = 'profile-card'
 ): Promise<void> => {
-  if (format === 'svg') {
-    // Download SVG directly
-    const blob = new Blob([svgContent], { type: 'image/svg+xml' })
-    const url = URL.createObjectURL(blob)
+  try {
+    const dataUrl = await toPng(element, {
+      quality: 1,
+      pixelRatio: 2,
+      cacheBust: true,
+      skipFonts: false
+    })
+    
     const link = document.createElement('a')
-    link.href = url
-    link.download = `${filename}.svg`
-    document.body.appendChild(link)
+    link.download = `${filename}.png`
+    link.href = dataUrl
     link.click()
-    document.body.removeChild(link)
-    URL.revokeObjectURL(url)
-    return
+  } catch (error) {
+    console.error('Failed to download PNG:', error)
+    throw error
   }
-
-  // For PNG/JPG, convert SVG to canvas
-  const img = new Image()
-  const svgBlob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' })
-  const url = URL.createObjectURL(svgBlob)
-
-  img.onload = () => {
-    const canvas = document.createElement('canvas')
-    canvas.width = 384 * 2 // 2x for better quality
-    canvas.height = 500 * 2
-    const ctx = canvas.getContext('2d')
-    
-    if (ctx) {
-      // Scale for higher quality
-      ctx.scale(2, 2)
-      ctx.drawImage(img, 0, 0)
-      
-      // Convert to desired format
-      const mimeType = format === 'png' ? 'image/png' : 'image/jpeg'
-      canvas.toBlob((blob) => {
-        if (blob) {
-          const downloadUrl = URL.createObjectURL(blob)
-          const link = document.createElement('a')
-          link.href = downloadUrl
-          link.download = `${filename}.${format}`
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-          URL.revokeObjectURL(downloadUrl)
-        }
-      }, mimeType, format === 'jpg' ? 0.95 : 1)
-    }
-    
-    URL.revokeObjectURL(url)
-  }
-
-  img.src = url
 }
 
-export const copySVGCode = (svgContent: string): void => {
-  navigator.clipboard.writeText(svgContent)
-    .then(() => {
-      console.log('SVG code copied to clipboard!')
+export const downloadAsJPG = async (
+  element: HTMLElement,
+  filename: string = 'profile-card'
+): Promise<void> => {
+  try {
+    const dataUrl = await toJpeg(element, {
+      quality: 0.95,
+      pixelRatio: 2,
+      cacheBust: true,
+      skipFonts: false
     })
-    .catch((err) => {
-      console.error('Failed to copy SVG code:', err)
+    
+    const link = document.createElement('a')
+    link.download = `${filename}.jpg`
+    link.href = dataUrl
+    link.click()
+  } catch (error) {
+    console.error('Failed to download JPG:', error)
+    throw error
+  }
+}
+
+export const downloadAsSVG = async (
+  element: HTMLElement,
+  filename: string = 'profile-card'
+): Promise<void> => {
+  try {
+    const dataUrl = await toSvg(element, {
+      cacheBust: true,
+      skipFonts: false
     })
+    
+    const link = document.createElement('a')
+    link.download = `${filename}.svg`
+    link.href = dataUrl
+    link.click()
+  } catch (error) {
+    console.error('Failed to download SVG:', error)
+    throw error
+  }
+}
+
+export const copySVGCode = async (element: HTMLElement): Promise<void> => {
+  try {
+    const dataUrl = await toSvg(element, {
+      cacheBust: true,
+      skipFonts: false
+    })
+    
+    // Convert data URL to SVG string
+    const svgString = decodeURIComponent(dataUrl.split(',')[1])
+    
+    await navigator.clipboard.writeText(svgString)
+    console.log('SVG code copied to clipboard!')
+  } catch (error) {
+    console.error('Failed to copy SVG code:', error)
+    throw error
+  }
 }
