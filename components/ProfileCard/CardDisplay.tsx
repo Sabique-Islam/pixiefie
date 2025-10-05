@@ -17,23 +17,34 @@ export const CardDisplay = forwardRef<HTMLDivElement, CardDisplayProps>(
       ? { ...activeTheme.colors, ...customColors }
       : activeTheme.colors
 
+    // Use custom gradient if colors are customized, otherwise use theme gradient
+    const hasCustomColors = customColors && Object.keys(customColors).length > 0
+    const gradientStyle = hasCustomColors
+      ? {
+          background: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})`
+        }
+      : {}
+
     return (
       <div
         ref={ref}
         className={`
           w-96 rounded-2xl shadow-2xl overflow-hidden
-          bg-gradient-to-br ${activeTheme.gradient}
-          ${activeTheme.backgroundPattern || ''}
+          ${!hasCustomColors ? `bg-gradient-to-br ${activeTheme.gradient}` : ''}
           ${activeTheme.shadowStyle || ''}
           ${activeTheme.borderStyle || ''}
           p-8
           transition-all duration-300
           relative
         `}
+        style={hasCustomColors ? gradientStyle : undefined}
       >
         {/* Background Pattern Layer */}
         {activeTheme.backgroundPattern && (
-          <div className={`absolute inset-0 ${activeTheme.backgroundPattern} pointer-events-none`} />
+          <div 
+            className={`absolute inset-0 ${activeTheme.backgroundPattern} pointer-events-none`}
+            style={hasCustomColors ? { opacity: 0.3 } : undefined}
+          />
         )}
         
         <div className="relative flex flex-col items-center space-y-6">

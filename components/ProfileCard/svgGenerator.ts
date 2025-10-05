@@ -51,26 +51,30 @@ export const generateSVG = async ({
     }
   }
 
-  // Get theme gradient classes and convert to actual colors
+  // Get theme gradient colors - use custom colors if provided, otherwise use theme defaults
+  const hasCustomColors = customColors && Object.keys(customColors).length > 0
   let gradientStart = colors.primary
   let gradientEnd = colors.secondary
   
-  // Parse theme gradient for better color matching
-  if (activeTheme.id === 'cyberpunk') {
-    gradientStart = '#10B981' // emerald-500
-    gradientEnd = '#3B82F6'   // blue-500
-  } else if (activeTheme.id === 'sunset') {
-    gradientStart = '#F97316' // orange-500
-    gradientEnd = '#EC4899'   // pink-500
-  } else if (activeTheme.id === 'ocean') {
-    gradientStart = '#0EA5E9' // sky-500
-    gradientEnd = '#1E40AF'   // blue-700
-  } else if (activeTheme.id === 'cosmic') {
-    gradientStart = '#8B5CF6' // violet-500
-    gradientEnd = '#EC4899'   // pink-500
-  } else if (activeTheme.id === 'retro') {
-    gradientStart = '#EC4899' // pink-500
-    gradientEnd = '#06B6D4'   // cyan-500
+  // Only use hardcoded theme colors if no custom colors are provided
+  if (!hasCustomColors) {
+    // Parse theme gradient for better color matching with default themes
+    if (activeTheme.id === 'cyberpunk') {
+      gradientStart = '#00FFFF'
+      gradientEnd = '#FF00FF'
+    } else if (activeTheme.id === 'sunset') {
+      gradientStart = '#FACC15'
+      gradientEnd = '#EF4444'
+    } else if (activeTheme.id === 'ocean-depths') {
+      gradientStart = '#2563EB'
+      gradientEnd = '#14B8A6'
+    } else if (activeTheme.id === 'cosmic') {
+      gradientStart = '#6B21A8'
+      gradientEnd = '#1E3A8A'
+    } else if (activeTheme.id === 'retro-wave') {
+      gradientStart = '#EC4899'
+      gradientEnd = '#4F46E5'
+    }
   }
   
   // Create comprehensive SVG that matches the exact layout
