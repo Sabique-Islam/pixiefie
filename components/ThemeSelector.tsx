@@ -1,7 +1,7 @@
 'use client'
 
 import { FC, useState } from 'react'
-import { Palette, Settings, Check } from 'lucide-react'
+import { Palette, Settings, Check, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Theme, defaultThemes, ThemeColors } from '@/lib/themes'
 import { ThemePreview } from './ThemePreview'
 
@@ -12,6 +12,8 @@ interface ThemeSelectorProps {
   onColorsChange: (colors: Partial<ThemeColors>) => void
 }
 
+const THEMES_PER_PAGE = 6
+
 export const ThemeSelector: FC<ThemeSelectorProps> = ({
   selectedTheme,
   customColors,
@@ -19,6 +21,24 @@ export const ThemeSelector: FC<ThemeSelectorProps> = ({
   onColorsChange
 }) => {
   const [showCustomColors, setShowCustomColors] = useState(false)
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const totalPages = Math.ceil(defaultThemes.length / THEMES_PER_PAGE)
+  const startIndex = currentPage * THEMES_PER_PAGE
+  const endIndex = startIndex + THEMES_PER_PAGE
+  const currentThemes = defaultThemes.slice(startIndex, endIndex)
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  const goToPreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
 
   const handleColorChange = (colorKey: keyof ThemeColors, value: string) => {
     onColorsChange({
@@ -31,13 +51,48 @@ export const ThemeSelector: FC<ThemeSelectorProps> = ({
     <div className="space-y-6">
       {/* Theme Selector */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <Palette className="w-5 h-5" />
-          Choose Theme
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <Palette className="w-5 h-5" />
+            Choose Theme
+          </h3>
+          
+          {/* Pagination Controls */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={goToPreviousPage}
+              disabled={currentPage === 0}
+              className={`p-2 rounded-lg border transition-all ${
+                currentPage === 0
+                  ? 'border-zinc-700 text-zinc-600 cursor-not-allowed'
+                  : 'border-zinc-600 text-white hover:border-zinc-400 hover:bg-white/5'
+              }`}
+              aria-label="Previous page"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            
+            <span className="text-sm text-gray-400 min-w-[80px] text-center">
+              {currentPage + 1} / {totalPages}
+            </span>
+            
+            <button
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages - 1}
+              className={`p-2 rounded-lg border transition-all ${
+                currentPage === totalPages - 1
+                  ? 'border-zinc-700 text-zinc-600 cursor-not-allowed'
+                  : 'border-zinc-600 text-white hover:border-zinc-400 hover:bg-white/5'
+              }`}
+              aria-label="Next page"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
         
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-          {defaultThemes.map((theme) => (
+          {currentThemes.map((theme) => (
             <button
               key={theme.id}
               onClick={() => onThemeChange(theme)}
