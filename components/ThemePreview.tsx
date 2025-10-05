@@ -19,21 +19,20 @@ export const ThemePreview: FC<ThemePreviewProps> = ({ theme, customColors }) => 
   }
 
   return (
-    <div className={`w-full h-32 rounded-lg bg-gradient-to-br ${getThemeClasses()} p-1 relative overflow-hidden ${theme.shadowStyle || 'shadow-lg'} ${theme.borderStyle || ''}`}>
+    <div className={`w-full h-32 rounded-lg bg-gradient-to-br ${getThemeClasses()} p-4 relative overflow-hidden ${theme.shadowStyle || 'shadow-lg'} ${theme.borderStyle || ''}`}>
       {/* Background Pattern */}
       {theme.backgroundPattern && (
-        <div className={`absolute inset-0 ${theme.backgroundPattern} opacity-30`} />
+        <div className={`absolute inset-0 ${theme.backgroundPattern}`} />
       )}
       
       <div 
-        className="relative w-full h-full rounded-md p-4 flex flex-col items-center justify-center space-y-2"
-        style={{ backgroundColor: colors.background }}
+        className="relative w-full h-full flex flex-col items-center justify-center space-y-2"
       >
         {/* Mini Avatar */}
         <div 
           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
           style={{ 
-            backgroundImage: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})`,
+            backgroundColor: colors.primary,
             color: colors.text
           }}
         >
@@ -57,7 +56,7 @@ export const ThemePreview: FC<ThemePreviewProps> = ({ theme, customColors }) => 
         </div>
         
         {/* Mini QR placeholder */}
-        <div className="w-6 h-6 bg-white rounded-sm opacity-80" />
+        <div className="w-6 h-6 bg-white rounded-sm opacity-90" />
       </div>
     </div>
   )
