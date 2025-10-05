@@ -5,8 +5,7 @@ import type { Profile } from '@/types/profile'
 import { Theme, ThemeColors, getPlatformTheme } from '@/lib/themes'
 import { CardDisplay } from './ProfileCard/CardDisplay'
 import { DownloadButtons } from './ProfileCard/DownloadButtons'
-import { generateSVG } from './ProfileCard/svgGenerator'
-import { downloadAsFormat, copySVGCode } from './ProfileCard/downloadUtils'
+import { downloadAsPNG, downloadAsJPG, downloadAsSVG, copySVGCode } from './ProfileCard/downloadUtils'
 
 interface ProfileCardProps {
   profile: Profile
@@ -21,43 +20,23 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile, theme, customColors }) => 
   const activeTheme = theme || getPlatformTheme(profile.platform, customColors)
 
   const handleDownloadPNG = async () => {
-    const svgContent = await generateSVG({
-      profile,
-      activeTheme,
-      customColors,
-      cardRef
-    })
-    await downloadAsFormat(svgContent, 'png', `${profile.username}-profile-card`)
+    if (!cardRef.current) return
+    await downloadAsPNG(cardRef.current, `${profile.username}-profile-card`)
   }
 
   const handleDownloadJPG = async () => {
-    const svgContent = await generateSVG({
-      profile,
-      activeTheme,
-      customColors,
-      cardRef
-    })
-    await downloadAsFormat(svgContent, 'jpg', `${profile.username}-profile-card`)
+    if (!cardRef.current) return
+    await downloadAsJPG(cardRef.current, `${profile.username}-profile-card`)
   }
 
   const handleDownloadSVG = async () => {
-    const svgContent = await generateSVG({
-      profile,
-      activeTheme,
-      customColors,
-      cardRef
-    })
-    await downloadAsFormat(svgContent, 'svg', `${profile.username}-profile-card`)
+    if (!cardRef.current) return
+    await downloadAsSVG(cardRef.current, `${profile.username}-profile-card`)
   }
 
   const handleCopySVG = async () => {
-    const svgContent = await generateSVG({
-      profile,
-      activeTheme,
-      customColors,
-      cardRef
-    })
-    copySVGCode(svgContent)
+    if (!cardRef.current) return
+    await copySVGCode(cardRef.current)
   }
 
   return (
