@@ -23,6 +23,13 @@ export const CardDisplay = forwardRef<HTMLDivElement, CardDisplayProps>(
           background: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})`
         }
       : {}
+    const patternOpacity = activeTheme.patternOpacity ?? 0.1
+
+    const glowStyle = activeTheme.glowColor
+      ? {
+          '--glow-color': activeTheme.glowColor
+        } as React.CSSProperties
+      : {}
 
     return (
       <div
@@ -36,23 +43,29 @@ export const CardDisplay = forwardRef<HTMLDivElement, CardDisplayProps>(
           transition-all duration-300
           relative
         `}
-        style={hasCustomColors ? gradientStyle : undefined}
+        style={{ ...gradientStyle, ...glowStyle }}
       >
         {/* Background Pattern Layer */}
         {activeTheme.backgroundPattern && (
           <div 
-            className={`absolute inset-0 ${activeTheme.backgroundPattern} pointer-events-none`}
-            style={hasCustomColors ? { opacity: 0.3 } : undefined}
+            className={`absolute inset-0 pointer-events-none ${
+              activeTheme.backgroundPattern.startsWith('bg-[') 
+                ? activeTheme.backgroundPattern 
+                : activeTheme.backgroundPattern
+            }`}
+            style={{ 
+              opacity: patternOpacity,
+              color: colors.primary
+            }}
           />
         )}
         
         <div className="relative flex flex-col items-center space-y-6">
-          {/* Avatar Section */}
+          {/* Avatar Section - Clean display without theme-based gradient overlays */}
           <div className="relative">
             <div
-              className="w-24 h-24 rounded-full border-4 overflow-hidden"
+              className="w-24 h-24 rounded-full border-4 overflow-hidden bg-black/20"
               style={{
-                background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
                 borderColor: `${colors.primary}40`
               }}
             >
@@ -68,7 +81,10 @@ export const CardDisplay = forwardRef<HTMLDivElement, CardDisplayProps>(
               ) : (
                 <div 
                   className="w-full h-full flex items-center justify-center text-4xl font-bold"
-                  style={{ color: colors.text }}
+                  style={{ 
+                    background: `linear-gradient(135deg, ${colors.primary}40, ${colors.secondary}40)`,
+                    color: colors.text 
+                  }}
                 >
                   {(profile.name || profile.username || 'U')
                     .charAt(0)

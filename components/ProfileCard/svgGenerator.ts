@@ -8,6 +8,94 @@ interface GenerateSVGOptions {
   cardRef: React.RefObject<HTMLDivElement | null>
 }
 
+// Lil vibecoded
+const getThemeGradientColors = (themeId: string, colors: ThemeColors): { start: string; end: string } => {
+  // Map of theme IDs to their gradient colors
+  const themeGradients: Record<string, { start: string; end: string }> = {
+    'cyberpunk': { start: '#00FFFF', end: '#FF00FF' },
+    'sunset': { start: '#FACC15', end: '#EF4444' },
+    'ocean-depths': { start: '#2563EB', end: '#14B8A6' },
+    'cosmic': { start: '#6B21A8', end: '#1E3A8A' },
+    'retro-wave': { start: '#EC4899', end: '#4F46E5' },
+    'forest': { start: '#166534', end: '#0F766E' },
+    'midnight': { start: '#0F172A', end: '#1E3A8A' },
+    'obsidian': { start: '#09090B', end: '#18181B' },
+    'aurora': { start: '#020617', end: '#4C1D95' },
+    'neon-noir': { start: '#000000', end: '#18181B' },
+    'void': { start: '#030010', end: '#3B0764' },
+    'matrix': { start: '#000500', end: '#14532D' },
+    'carbon': { start: '#0A0A0A', end: '#171717' },
+    'ember': { start: '#0C0602', end: '#451A03' },
+    'frost': { start: '#080F14', end: '#083344' },
+    'rose-gold': { start: '#0F080C', end: '#4C0519' }
+  }
+
+  return themeGradients[themeId] || { start: colors.primary, end: colors.secondary }
+}
+
+// Helper to generate SVG pattern based on theme
+const generatePatternDef = (theme: Theme, colors: ThemeColors): string => {
+  const patternType = theme.patternType
+  const opacity = theme.patternOpacity ?? 0.1
+  const patternColor = colors.primary
+
+  switch (patternType) {
+    case 'dots':
+      return `
+        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="16" height="16">
+          <circle cx="8" cy="8" r="1" fill="${patternColor}" opacity="${opacity}"/>
+        </pattern>
+      `
+    case 'grid':
+      return `
+        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="24" height="24">
+          <path d="M 24 0 L 0 0 0 24" fill="none" stroke="${patternColor}" stroke-width="0.5" opacity="${opacity}"/>
+        </pattern>
+      `
+    case 'cross-hatch':
+      return `
+        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="16" height="16">
+          <path d="M 0 0 L 16 16 M 16 0 L 0 16" stroke="${patternColor}" stroke-width="0.5" opacity="${opacity}"/>
+        </pattern>
+      `
+    case 'diagonal-lines':
+      return `
+        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="${patternColor}" stroke-width="0.5" opacity="${opacity}"/>
+        </pattern>
+      `
+    case 'circuit':
+      return `
+        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="40" height="40">
+          <path d="M 0 20 L 20 20 L 20 0 M 20 20 L 40 20 M 20 20 L 20 40" fill="none" stroke="${patternColor}" stroke-width="1" opacity="${opacity}"/>
+          <circle cx="20" cy="20" r="3" fill="${patternColor}" opacity="${opacity}"/>
+        </pattern>
+      `
+    case 'hexagon':
+      return `
+        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="28" height="49">
+          <path d="M14,0 L28,12.25 L28,36.75 L14,49 L0,36.75 L0,12.25 Z" fill="none" stroke="${patternColor}" stroke-width="0.5" opacity="${opacity}" transform="translate(0, -12.25)"/>
+        </pattern>
+      `
+    case 'mesh':
+      return `
+        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="32" height="32">
+          <path d="M 32 0 L 0 0 0 32" fill="none" stroke="${patternColor}" stroke-width="0.5" opacity="${opacity}"/>
+          <path d="M 0 0 L 32 32" fill="none" stroke="${patternColor}" stroke-width="0.3" opacity="${opacity * 0.5}"/>
+        </pattern>
+      `
+    case 'radial-gradient':
+      return `
+        <radialGradient id="bgPattern" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="${patternColor}" stop-opacity="${opacity * 2}"/>
+          <stop offset="100%" stop-color="${patternColor}" stop-opacity="0"/>
+        </radialGradient>
+      `
+    default:
+      return ''
+  }
+}
+
 export const generateSVG = async ({
   profile,
   activeTheme,
@@ -51,31 +139,15 @@ export const generateSVG = async ({
     }
   }
 
-  // Get theme gradient colors - use custom colors if provided, otherwise use theme defaults
+  // Get theme gradient colors
   const hasCustomColors = customColors && Object.keys(customColors).length > 0
-  let gradientStart = colors.primary
-  let gradientEnd = colors.secondary
-  
-  // Only use hardcoded theme colors if no custom colors are provided
-  if (!hasCustomColors) {
-    // Parse theme gradient for better color matching with default themes
-    if (activeTheme.id === 'cyberpunk') {
-      gradientStart = '#00FFFF'
-      gradientEnd = '#FF00FF'
-    } else if (activeTheme.id === 'sunset') {
-      gradientStart = '#FACC15'
-      gradientEnd = '#EF4444'
-    } else if (activeTheme.id === 'ocean-depths') {
-      gradientStart = '#2563EB'
-      gradientEnd = '#14B8A6'
-    } else if (activeTheme.id === 'cosmic') {
-      gradientStart = '#6B21A8'
-      gradientEnd = '#1E3A8A'
-    } else if (activeTheme.id === 'retro-wave') {
-      gradientStart = '#EC4899'
-      gradientEnd = '#4F46E5'
-    }
-  }
+  const gradientColors = hasCustomColors 
+    ? { start: colors.primary, end: colors.secondary }
+    : getThemeGradientColors(activeTheme.id, colors)
+
+  // Generate pattern definition
+  const patternDef = generatePatternDef(activeTheme, colors)
+  const hasPattern = activeTheme.patternType && activeTheme.patternType !== 'none'
   
   // Create comprehensive SVG that matches the exact layout
   const svg = `
@@ -83,23 +155,18 @@ export const generateSVG = async ({
       <defs>
         <!-- Main theme gradient (outer) -->
         <linearGradient id="themeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:${gradientStart}" />
-          <stop offset="100%" style="stop-color:${gradientEnd}" />
+          <stop offset="0%" style="stop-color:${gradientColors.start}" />
+          <stop offset="100%" style="stop-color:${gradientColors.end}" />
         </linearGradient>
         
-        <!-- Avatar gradient -->
+        <!-- Avatar gradient (for placeholder) -->
         <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:${colors.primary}" />
-          <stop offset="100%" style="stop-color:${colors.secondary}" />
+          <stop offset="0%" style="stop-color:${colors.primary}66" />
+          <stop offset="100%" style="stop-color:${colors.secondary}66" />
         </linearGradient>
         
         <!-- Background pattern if exists -->
-        ${activeTheme.backgroundPattern ? `
-        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="20" height="20" patternTransform="rotate(45)">
-          <rect width="20" height="20" fill="transparent"/>
-          <circle cx="10" cy="10" r="1" fill="${gradientStart}" opacity="0.1"/>
-        </pattern>
-        ` : ''}
+        ${patternDef}
         
         <!-- Avatar mask -->
         <clipPath id="avatarClip">
@@ -111,7 +178,12 @@ export const generateSVG = async ({
       <rect width="384" height="500" fill="url(#themeGradient)" rx="16"/>
       
       <!-- Background pattern overlay -->
-      ${activeTheme.backgroundPattern ? `<rect width="384" height="500" fill="url(#bgPattern)" opacity="0.3" rx="16"/>` : ''}
+      ${hasPattern && activeTheme.patternType !== 'radial-gradient' 
+        ? `<rect width="384" height="500" fill="url(#bgPattern)" rx="16"/>` 
+        : hasPattern && activeTheme.patternType === 'radial-gradient'
+          ? `<rect width="384" height="500" fill="url(#bgPattern)" rx="16"/>`
+          : ''
+      }
       
       <!-- Inner card background (like backdrop-blur-sm bg-black/50) -->
       <rect x="4" y="4" width="376" height="492" fill="${colors.background}" opacity="0.95" rx="12"/>
@@ -122,7 +194,7 @@ export const generateSVG = async ({
         <!-- Avatar Section (96x96 = w-24 h-24, centered) -->
         <g transform="translate(156, 58)">
           <!-- Avatar border (border-4 border-white/20) -->
-          <circle cx="0" cy="0" r="52" fill="rgba(255,255,255,0.2)" />
+          <circle cx="0" cy="0" r="52" fill="${colors.primary}40" />
           
           <!-- Avatar -->
           ${avatarBase64 ? `
@@ -171,7 +243,7 @@ export const generateSVG = async ({
           </g>
           
           <!-- "Scan to view profile" text -->
-          <text x="0" y="65" text-anchor="middle" fill="rgba(156, 163, 175, 1)" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+          <text x="0" y="65" text-anchor="middle" fill="${colors.textSecondary}" font-size="12" font-family="system-ui, -apple-system, sans-serif">
             Scan to view profile
           </text>
         </g>

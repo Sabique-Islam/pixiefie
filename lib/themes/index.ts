@@ -1,4 +1,5 @@
-export type { Theme, ThemeColors, ThemeConfig } from './types'
+export type { Theme, ThemeColors, ThemeConfig, PatternType } from './types'
+export { getPatternClass, getGlowStyles } from './types'
 
 import type { Theme, ThemeConfig, ThemeColors } from './types'
 
@@ -10,9 +11,32 @@ import { oceanDepths } from './ocean-depths'
 import { cosmic } from './cosmic'
 import { retroWave } from './retro-wave'
 import { forest } from './forest'
+import { midnight } from './midnight'
+import { obsidian } from './obsidian'
+import { aurora } from './aurora'
+import { neonNoir } from './neon-noir'
+import { voidTheme } from './void'
+import { matrix } from './matrix'
+import { carbon } from './carbon'
+import { ember } from './ember'
+import { frost } from './frost'
+import { roseGold } from './rose-gold'
 
 // Just add your imported theme to this array and it will be registered automatically
+// Order matters for display - darker/more aesthetic themes first
 const allThemeConfigs: ThemeConfig[] = [
+  // Dark aesthetics
+  midnight,
+  obsidian,
+  aurora,
+  neonNoir,
+  voidTheme,
+  matrix,
+  carbon,
+  ember,
+  frost,
+  roseGold,
+  // Classic themes
   platformDefault,
   forest,
   cyberpunk,
@@ -119,5 +143,16 @@ export {
   oceanDepths,
   cosmic,
   forest,
-  retroWave
+  retroWave,
+  // New dark themes
+  midnight,
+  obsidian,
+  aurora,
+  neonNoir,
+  voidTheme,
+  matrix,
+  carbon,
+  ember,
+  frost,
+  roseGold
 }
