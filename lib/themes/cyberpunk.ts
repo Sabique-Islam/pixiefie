@@ -13,9 +13,13 @@ const cyberpunkTheme: Theme = {
     textSecondary: '#FF00FF'
   },
   gradient: 'from-cyan-400 via-purple-500 to-pink-500',
+  patternType: 'radial-gradient',
   backgroundPattern: 'bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,255,0.1)_0%,transparent_50%)]',
+  patternOpacity: 1,
   borderStyle: 'border-2 border-cyan-400/50',
-  shadowStyle: 'shadow-2xl shadow-cyan-500/25'
+  shadowStyle: 'shadow-2xl shadow-cyan-500/25',
+  glowColor: 'rgba(0, 255, 255, 0.2)',
+  glowIntensity: 'medium'
 }
 
 const generateCSS = (): string => {

@@ -13,7 +13,9 @@ const forestTheme: Theme = {
     textSecondary: '#A7F3D0'
   },
   gradient: 'from-green-800 via-emerald-700 to-teal-600',
+  patternType: 'radial-gradient',
   backgroundPattern: 'bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1)_0%,transparent_50%)]',
+  patternOpacity: 1,
   borderStyle: 'border border-green-500/30',
   shadowStyle: 'shadow-2xl shadow-green-500/25'
 }

@@ -13,9 +13,13 @@ const cosmicTheme: Theme = {
     textSecondary: '#C7D2FE'
   },
   gradient: 'from-purple-900 via-blue-900 to-indigo-900',
+  patternType: 'radial-gradient',
   backgroundPattern: 'bg-[radial-gradient(circle_at_20%_80%,rgba(120,119,198,0.3)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(255,119,198,0.3)_0%,transparent_50%),radial-gradient(circle_at_40%_40%,rgba(120,119,198,0.2)_0%,transparent_50%)]',
+  patternOpacity: 1,
   borderStyle: 'border border-purple-500/30',
-  shadowStyle: 'shadow-2xl shadow-purple-500/25'
+  shadowStyle: 'shadow-2xl shadow-purple-500/25',
+  glowColor: 'rgba(139, 92, 246, 0.15)',
+  glowIntensity: 'subtle'
 }
 
 const generateCSS = (): string => {

@@ -13,7 +13,10 @@ const sunsetTheme: Theme = {
     textSecondary: '#FED7AA'
   },
   gradient: 'from-yellow-400 via-orange-500 to-red-500',
+  patternType: 'radial-gradient',
   backgroundPattern: 'bg-[radial-gradient(ellipse_at_top,rgba(255,255,0,0.1)_0%,transparent_70%)]',
+  patternOpacity: 1,
+  borderStyle: 'border border-orange-400/20',
   shadowStyle: 'shadow-2xl shadow-orange-500/25'
 }
 

@@ -13,9 +13,13 @@ const retroWaveTheme: Theme = {
     textSecondary: '#00FFFF'
   },
   gradient: 'from-pink-500 via-purple-600 to-indigo-600',
+  patternType: 'diagonal-lines',
   backgroundPattern: 'bg-[linear-gradient(45deg,transparent_25%,rgba(255,0,255,0.1)_25%,rgba(255,0,255,0.1)_50%,transparent_50%,transparent_75%,rgba(0,255,255,0.1)_75%)] bg-[length:20px_20px]',
+  patternOpacity: 1,
   borderStyle: 'border-2 border-pink-500/50',
-  shadowStyle: 'shadow-2xl shadow-pink-500/25'
+  shadowStyle: 'shadow-2xl shadow-pink-500/25',
+  glowColor: 'rgba(255, 0, 255, 0.15)',
+  glowIntensity: 'medium'
 }
 
 const generateCSS = (): string => {

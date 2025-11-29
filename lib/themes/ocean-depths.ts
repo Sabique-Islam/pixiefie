@@ -13,7 +13,10 @@ const oceanDepthsTheme: Theme = {
     textSecondary: '#BAE6FD'
   },
   gradient: 'from-blue-600 via-teal-500 to-emerald-500',
+  patternType: 'waves',
   backgroundPattern: 'bg-[radial-gradient(circle_at_25%_25%,rgba(59,130,246,0.1)_0%,transparent_50%),radial-gradient(circle_at_75%_75%,rgba(20,184,166,0.1)_0%,transparent_50%)]',
+  patternOpacity: 1,
+  borderStyle: 'border border-blue-400/20',
   shadowStyle: 'shadow-2xl shadow-blue-500/25'
 }
 
