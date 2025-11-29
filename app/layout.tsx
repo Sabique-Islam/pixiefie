@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import  ReactLenis from 'lenis/react'
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,6 +35,7 @@ export default function RootLayout({
         <ReactLenis root>
         {children}
         </ReactLenis>
+        <Analytics />
       </body>
     </html>
   );
